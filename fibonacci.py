@@ -36,3 +36,4 @@ def fib_rec(n: int) -> int:
 for i in range(0, 20):
     print(fib_rec(i))
     assert fib_list[i] == fib_rec(i)
+
