@@ -39,40 +39,40 @@ def fib_rec(n: int) -> int:
     return fib_rec(n - 1) + fib_rec(n - 2)
 
 
-l: Dict[int, int] = {}
+cache: Dict[int, int] = {}
 
 def fib_dyn(n: int) -> int:
     '''
-    calculates fibonacci sequence by memoizing
+    calculates fibonacci sequence by memoization
     stores intermediate values in dictionary
     '''
     if n < 2:
-        l[n] = n
+        cache[n] = n
         return n
 
-    if (n - 1) in l.keys():
-        if (n - 2) in l.keys():
-            l[n] = l[n - 1] + l[n - 2]
-            return l[n]
-        l[n] = l[n - 1] + fib_dyn(n - 2)
-        return l[n]
+    if (n - 1) in cache.keys():
+        if (n - 2) in cache.keys():
+            cache[n] = cache[n - 1] + cache[n - 2]
+            return cache[n]
+        cache[n] = cache[n - 1] + fib_dyn(n - 2)
+        return cache[n]
 
     return fib_dyn(n - 1) + fib_dyn(n - 2)
 
 # assert and time naive approach
 t0 = time.time()
-for i in range(0, 30):
+for i in range(0, 32):
     assert fib_list[i] == fib_rec(i)
     fib_rec(i)
 t1 = time.time()
 
-print('fib_rec took:', '{:.8f}'.format(t1 - t0), 'seconds')
+print('fib_rec took:', '{:.8f}'.format(t1 - t0), 'seconds for 32 fibonacci calculations')
 
 # assert and time dynamic approach
 t0 = time.time()
-for i in range(0, 90):
+for i in range(0, 100):
     assert fib_list[i] == fib_dyn(i)
     fib_dyn(i)
 t1 = time.time()
 
-print('fib_dyn took:', '{:.8f}'.format(t1 - t0), 'seconds')
+print('fib_dyn took:', '{:.8f}'.format(t1 - t0), 'seconds for 100 fibonacci calculations')
